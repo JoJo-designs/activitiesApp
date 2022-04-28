@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const User = require("../models/user")
+const Activity = require("../model")
 
 // route that will get all the users in the database
 router.get("/api/all", (req, res) => {
-    User.find({})
+    Activity.find({})
     .then(data => {
         res.json(data);
     })
@@ -13,5 +13,16 @@ router.get("/api/all", (req, res) => {
 })
 
 // route that will add a new User
+
+router.post("/api/add", ({ body }, res) => {
+    Activity.create(body)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        res.status(400).json(err)
+    })
+})
+
 
 module.exports = router;
