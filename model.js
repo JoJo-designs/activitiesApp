@@ -19,7 +19,8 @@ const activitySchema = new Schema ({
         type: String,
         trim: true,
         required: true,
-        bcrypt: true
+        bcrypt: true,
+        rounds: 10
     },
 });
 
