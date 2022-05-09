@@ -24,6 +24,7 @@ const activitySchema = new Schema ({
     },
 });
 
+
 activitySchema.plugin(require('mongoose-bcrypt'));
 
 

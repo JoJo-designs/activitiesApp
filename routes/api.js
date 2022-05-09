@@ -24,35 +24,5 @@ router.post("/api/add", ({ body }, res) => {
 })
 
 //Route that will login existing User
-router.get("/login", async(req, res) => {
-    console.log(req.body)
-    try{
-        const userDate = await User.findOne({email: req.body.email});
-        if (!userData) {
-            res.status(400)
-            console.log("wrong")
-            .json({message: 'incorrect email or password try again'})
-            return;
-        }
-
-        const validPassword = await userDate.checkPassword(req.body.password);
-
-        if (!vaildPassword) {
-            res.json(400)
-            console.log("wrong")
-            .json({message: 'incorrect email or password try again'})
-            return;
-        }
-
-        req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.logged_in = true
-            res.json({message: 'logged in succesful'})
-        })
-
-        } catch(err) {
-            res.status(204).end();
-        }
-});
 
 module.exports = router;
