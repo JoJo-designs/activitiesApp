@@ -24,15 +24,55 @@ router.post("/api/add", ({ body }, res) => {
 })
 
 //Route that will login existing User
-router.post('/login', async ( req, res ) => {
+// router.post('/api/login', async ( req, res ) => {
+//     console.log(req.body)
+//         try {
+//             const userData = await Activity.findOne({ where: {email: req.body.userName} });
+//             console.log(userData)
+//         }
+//         catch (err) {
+//             res.status(400).json(err)
+//         }
+// })
+
+
+// router.post('/api/login', ( req, res ) => {
+//     console.log(req.body)
+//        Activity.findOne({ where: {email: req.body.email} })
+//        .then(data => {
+//            res.json(data)
+//        })
+//        .catch(err => {
+//            res.status(400).json(err)
+//        })
+// })
+
+router.post('/api/login', async (req, res) => {
     console.log(req.body)
-        try {
-            const userData = Activity.findOne({ where: {email: req.body.email} });
-            console.log(userData)
+    try {
+        const userData = await Activity.findOne({ where: { email: req.body.email } });
+        console.log(userData)
+        if (!userData) {
+            res
+            .status(400)
+            console.log("wrong data\n")
+            .json({ message: 'incorrect email or password, please try again' });
+            return;
         }
-        catch (err) {
-            res.status(400).json(err)
+        
+        const validPassword = await userData.checkPassword(req.body.password);
+
+        if (!validPassword) {
+            res.json(400)
+            console.log("wrong password\n")
+            .json({ message: 'incorrect email or password, please try again' });
+            return;
         }
-})
+
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
 
 module.exports = router;
