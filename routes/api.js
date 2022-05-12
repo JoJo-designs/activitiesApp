@@ -24,5 +24,15 @@ router.post("/api/add", ({ body }, res) => {
 })
 
 //Route that will login existing User
+router.post('/login', async ( req, res ) => {
+    console.log(req.body)
+        try {
+            const userData = Activity.findOne({ where: {email: req.body.email} });
+            console.log(userData)
+        }
+        catch (err) {
+            res.status(400).json(err)
+        }
+})
 
 module.exports = router;
